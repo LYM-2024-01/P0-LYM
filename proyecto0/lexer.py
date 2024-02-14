@@ -19,10 +19,11 @@ def separedo_texto (archivo):
         flag1 = True
         #print(archivo[i])
         while(flag1):
-            if (archivo[i] not in ["", " ", "\n", "\t"]):
+            if (archivo[i] not in separadores):
                 palabra += archivo[i]
                 i+=1
                 #print(palabra)
+
 
             else:
                 print("mal: " + str(i) + " " +archivo[i])
