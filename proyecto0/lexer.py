@@ -1,37 +1,47 @@
 import pyparsing as pp
 
+caracteres_importantes = ["(", ")"]
+separadores = ["", " ", "\n", "\t"]
+
+
+
+def siguiente_palabra (archivo, i):
+    
+    palabra = ""
+    flag1 = True
+    while(flag1):
+
+        if (archivo[i] in caracteres_importantes):
+            palabra = archivo[i]
+            flag1 = False
+
+        elif (archivo[i] not in separadores) :
+            palabra += archivo[i]
+
+            if(archivo[i+1] in caracteres_importantes):
+                flag1 = False
+
+        else:
+            flag1 = False
+        i+=1
+
+    return palabra, i
 
 
 
 
-def separedo_texto (archivo):
+def separar_texto (archivo):
 
-
-    caracteres_importantes = ["(", ")"]
-    separadores = ["(", ")", " ", "\n", "\t"]
     tamanio = len(archivo)
     respuesta = []
     i = 0
 
     while(i < tamanio):
-        palabra = ""
+
+        palabra, i = siguiente_palabra (archivo, i)
         
-        flag1 = True
-        #print(archivo[i])
-        while(flag1):
-            if (archivo[i] not in separadores):
-                palabra += archivo[i]
-                i+=1
-                #print(palabra)
-
-
-            else:
-                print("mal: " + str(i) + " " +archivo[i])
-                flag1 = False
-
-        if (palabra not in ["", " ", "\n", "\t"]):
+        if (palabra not in separadores):
             respuesta.append(palabra)
-        i+=1
     
-    print(respuesta)
+    return respuesta
 

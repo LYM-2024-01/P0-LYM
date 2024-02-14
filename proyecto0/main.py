@@ -17,8 +17,8 @@ def main ():
     ruta_archivo=input("Ingrese la ruta del archivo ( por ejemplo: proyecto0/documentos/ejemplo2.txt): ")
     archivo= open(ruta_archivo).read().lower()
 
-    lexer.separedo_texto(archivo)
-
+    lista = lexer.separar_texto(archivo)
+    print(lista)
 
     """
     greet = pp.Word(pp.alphas) + "," + pp.Word(pp.alphas) + "!"
