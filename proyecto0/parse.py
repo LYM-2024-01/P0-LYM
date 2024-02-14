@@ -12,4 +12,28 @@ constant = {
     "Spaces": "number of chips that can be dropped"
 }
 
-instrucciones = {}
+instrucciones = {"defvar": 2,
+                 "move": 1, 
+                 "skip": 1, 
+                 "turn": 1, 
+                 "face": 1,
+                 "put": 2,
+                 "pick": 2,
+                 "move-dir": 2,
+                 "run-dirs": 1,
+                 "move-face": 2,
+                 "null": 0,}
+
+estructuras = {'if': 3,
+               'loop': 2}
+
+#agregar defun
+
+condiciones = {'facing': 1,
+               'blocked': 0,
+               'can-put': 2,
+               'can-pick': 2,
+               'can-move': 1,
+               'isZero': 1,
+               'not': 1}
+
