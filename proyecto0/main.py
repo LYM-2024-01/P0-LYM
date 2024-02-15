@@ -1,6 +1,7 @@
 import sys
 import pyparsing as pp
 import lexer
+# import parse
 # pip install pyparsing
 
 
@@ -20,6 +21,9 @@ def main ():
     lista = lexer.separar_texto(archivo)
     print(lista)
 
+    texto_tokenizado=" ".join(lista)
+    
+    print(texto_tokenizado)
     """
     greet = pp.Word(pp.alphas) + "," + pp.Word(pp.alphas) + "!"
     for greeting_str in [

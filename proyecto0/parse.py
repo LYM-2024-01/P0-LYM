@@ -1,4 +1,4 @@
-
+from pyparsing import And, Word, Literal, Group, Optional, ZeroOrMore, oneOf,Empty, OneOrMore,Forward,nums,CharsNotIn,alphas,alphanums
 
 
 constant = {
@@ -36,4 +36,14 @@ condiciones = {'facing': 1,
                'can-move': 1,
                'isZero': 1,
                'not': 1}
+
+
+integer = Word(nums)
+name_expr = Word(alphas)[1, ...]
+
+expr = And([integer("id"), name_expr("name"), integer("age")])
+print(expr)
+# more easily written as:
+expr = integer("id") + name_expr("name") + integer("age")
+print(expr)
 
