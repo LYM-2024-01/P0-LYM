@@ -1,7 +1,7 @@
 import pyparsing as pp
 
 caracteres_importantes = ["(", ")"]
-separadores = ["", " ", "\n", "\t"]
+separadores = [" ", "\n", "\t"]
 
 
 
