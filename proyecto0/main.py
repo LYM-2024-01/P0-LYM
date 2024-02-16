@@ -1,5 +1,4 @@
 import sys
-import pyparsing as pp
 import lexer
 # import parse
 # pip install pyparsing
