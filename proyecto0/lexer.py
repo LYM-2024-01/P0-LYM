@@ -172,7 +172,8 @@ def siguiente_palabra (archivo, i):
     idp, valorp = dar_tipo(palabra)
 
     adicion = tk.Token(idp, valorp)
-    return adicion, i               # return idp, i   #Cambiar el return de adicion por el de idp y el comentario de mas abajo para imprimir
+    #return adicion, i               
+    return idp, i   #Cambiar el return de adicion por el de idp y el comentario de mas abajo para imprimir
 
 
 
@@ -196,8 +197,8 @@ def separar_texto (archivo):
 
 
 
-archivo= open("proyecto0/documentos/ejemplo.txt").read().lower()
+#archivo= open("proyecto0/documentos/ejemplo.txt").read().lower()
 
-lista = separar_texto(archivo)
+#lista = separar_texto(archivo)
 #print(lista)            #Quitar comentario para imprimir lista
 

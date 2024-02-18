@@ -1,6 +1,6 @@
 import sys
 import lexer
-# import parse
+import parse
 # pip install pyparsing
 
 
@@ -20,21 +20,17 @@ def main ():
     lista = lexer.separar_texto(archivo)
     print(lista)
 
-    texto_tokenizado=" ".join(lista)
-    
-    print(texto_tokenizado)
-    """
-    greet = pp.Word(pp.alphas) + "," + pp.Word(pp.alphas) + "!"
-    for greeting_str in [
-                "Hello, World!",
-                "Bonjour, Monde!",
-                "Hola, Mundo!",
-                "Hallo, Welt!",
-            ]:
-        greeting = greet.parse_string(greeting_str)
-        print(greeting)
+    aceptado = parse.verificacion(lista)
 
-    """
+    try:
+        print("La cadena es válida según la gramática")
+
+        #TODO Meter aca el llamado  aceptado = parse.verificacion(lista)
+    except Exception as e:
+        print("La cadena no es válida según la gramática")
+        print(e)
+
+
 
 if __name__ == '__main__':
     main()
