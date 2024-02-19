@@ -10,38 +10,37 @@ constant = {
     "Spaces": "number of chips that can be dropped"
 }
 
-instrucciones = {"defvar": 2,
-                 "move": 1, 
-                 "skip": 1, 
-                 "turn": 1, 
-                 "face": 1,
-                 "put": 2,
-                 "pick": 2,
-                 "move-dir": 2,
-                 "run-dirs": 1,
-                 "move-face": 2,
-                 "null": 0,}
-
-estructuras = {'if': 3,
-               'loop': 2}
-
-#agregar defun
-
-condiciones = {'facing': 1,
-               'blocked': 0,
-               'can-put': 2,
-               'can-pick': 2,
-               'can-move': 1,
-               'isZero': 1,
-               'not': 1}
-
-
-INSTRUCCIONES = [
-    [""]
-]
 
 COMANDOS = [
-    ['LP', 'CAN-MOVE?', 'O', 'RP']
+    ['LP', 'DEFVAR', 'NAME', 'NUMBER', 'RP'],
+    ['LP', 'RP'],
+    ['LP', 'MOVE', 'NUMBER', 'RP'],
+    ['LP', 'SKIP', 'NUMBER', 'RP'],
+    ['LP', 'TURN', 'D','RP'],
+    ['LP', 'FACE', 'O', 'RP'],
+    ['LP', 'PUT', 'X', 'NUMBER', 'RP'],
+    ['LP', 'PICK', 'X', 'NUMBER', 'RP'],
+    ['LP', 'MOVE-DIR', 'NUMBER', 'D', 'RP'],
+    ['LP', 'RUN-DIRS', '', 'RP'],
+    ['LP', 'MOVE-FACE', 'NUMBER', 'D', 'RP'],
+    ['LP', 'NULL', 'RP'],
+]
+
+CONDICIONES = [
+    ['LP', 'FACING?', 'O', 'RP']
+    ['LP', 'BLOCKED?', 'RP']
+    ['LP', 'CAN-PUT?', 'X', 'NUMBER', 'RP']
+    ['LP', 'CAN-PICK?', 'X', 'NUMBER', 'RP']
+    ['LP', 'CAN-MOVE?', 'O', 'RP'],
+    ['LP', 'ISZERO?', 'NUMBER', 'RP']
+    ['LP', 'NOT', 'CONDICION', 'RP']
+]
+
+ESTRUCTURAS = [
+    ['LP', 'IF', 'CONDICION', 'COMANDO', 'COMANDO', 'RP'],
+    ['LP', 'LOOP', 'CONDICION', 'COMANDO', 'RP'],
+    ['LP', 'REPEAT', 'NUMBER', 'COMANDO', 'RP'],
+    ['LP', 'DEFUN', 'NAME', 'COMANDO', 'RP']
 ]
 
 
@@ -97,7 +96,7 @@ def verificacion(lista):
 
 def pertence(sublist):
 
-    if sublist in COMANDOS:
+    if sublist in CONDICIONES:
         return "CONDICION"
     
 
