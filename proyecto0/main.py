@@ -14,23 +14,22 @@ def end():
 
 def main ():
      
-    ruta_archivo=input("Ingrese la ruta del archivo ( por ejemplo: proyecto0/documentos/ejemplo2.txt): ")
+    ruta_archivo=input("Ingrese la ruta del archivo ( por ejemplo: proyecto0/documentos/ejemplo.txt): ")
     archivo= open(ruta_archivo).read().lower()
 
     lista = lexer.separar_texto(archivo)
-    print(lista)
+    print()
 
-    aceptado = parse.verificacion(lista)
     try:
-        
-
+        aceptado = parse.verificacion(lista)
         if (aceptado):
-            print("La cadena es válida según la gramática")
+            print("La cadena es válida según la gramática\n")
         else:
-            print("La cadena no es válida según la gramática")
+            print("La cadena no es válida según la gramática\n")
     except Exception as e:
-        print("La cadena no es válida según la gramática")
+        print("La cadena no es válida según la gramática\n")
         print(e)
+
 
 
 

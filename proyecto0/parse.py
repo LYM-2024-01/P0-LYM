@@ -6,26 +6,48 @@ Las estructuras de control no se puede estandarizar, entonces serán verificadas
 """
 
 COMANDOS = [
+    ['LP', 'DEFVAR', 'NAME', 'CONSTANTE', 'RP'],
     ['LP', 'DEFVAR', 'NAME', 'NUMBER', 'RP'],
+    ['LP', 'DEFVAR', 'NAME', 'NAME', 'RP'],
+    ['LP', '=', 'NAME', 'CONSTANTE', 'RP'],
     ['LP', '=', 'NAME', 'NUMBER', 'RP'],
+    ['LP', '=', 'NAME', 'NAME', 'RP'],
+    ['LP', 'MOVE', 'CONSTANTE', 'RP'],
     ['LP', 'MOVE', 'NUMBER', 'RP'],
+    ['LP', 'MOVE', 'NAME', 'RP'],
+    ['LP', 'SKIP', 'CONSTANTE', 'RP'],
     ['LP', 'SKIP', 'NUMBER', 'RP'],
+    ['LP', 'SKIP', 'NAME', 'RP'],
     ['LP', 'TURN', 'D','RP'],
     ['LP', 'FACE', 'O', 'RP'],
+    ['LP', 'PUT', 'X', 'CONSTANTE', 'RP'],
     ['LP', 'PUT', 'X', 'NUMBER', 'RP'],
+    ['LP', 'PUT', 'X', 'NAME', 'RP'],
+    ['LP', 'PICK', 'X', 'CONSTANTE', 'RP'],
     ['LP', 'PICK', 'X', 'NUMBER', 'RP'],
+    ['LP', 'PICK', 'X', 'NAME', 'RP'],
+    ['LP', 'MOVE-DIR', 'CONSTANTE', 'D', 'RP'],
     ['LP', 'MOVE-DIR', 'NUMBER', 'D', 'RP'],
+    ['LP', 'MOVE-DIR', 'NAME', 'D', 'RP'],
+    ['LP', 'MOVE-FACE', 'CONSTANTE', 'D', 'RP'],
     ['LP', 'MOVE-FACE', 'NUMBER', 'D', 'RP'],
+    ['LP', 'MOVE-FACE', 'NAME', 'D', 'RP'],
     ['LP', 'NULL', 'RP'],
 ]
 
 CONDICIONES = [
     ['LP', 'FACING?', 'O', 'RP'],
     ['LP', 'BLOCKED?', 'RP'],
+    ['LP', 'CAN-PUT?', 'X', 'CONSTANTE', 'RP'],
     ['LP', 'CAN-PUT?', 'X', 'NUMBER', 'RP'],
+    ['LP', 'CAN-PUT?', 'X', 'NAME', 'RP'],
+    ['LP', 'CAN-PICK?', 'X', 'CONSTANTE', 'RP'],
     ['LP', 'CAN-PICK?', 'X', 'NUMBER', 'RP'],
+    ['LP', 'CAN-PICK?', 'X', 'NAME', 'RP'],
     ['LP', 'CAN-MOVE?', 'O', 'RP'],
+    ['LP', 'ISZERO?', 'CONSTANTE', 'RP'],
     ['LP', 'ISZERO?', 'NUMBER', 'RP'],
+    ['LP', 'ISZERO?', 'NAME', 'RP'],
     ['LP', 'NOT', 'CONDICION', 'RP']
 ]
 
@@ -60,7 +82,7 @@ def verificacion(lista):
 
         tok = lista[i]
         stack.append(tok)
-        print(stack)
+
         if tok == "LP":
             LPposition.append(i)
             contador+=1
@@ -70,11 +92,11 @@ def verificacion(lista):
             bandera1 = True
 
             sublista = []
-            print("------")
+
             while (bandera1):
                 if (len(stack) > 0):
                     h = stack.pop()
-                    print(h)
+
                     sublista.insert(0,h)
                     if(h == "LP"):
                         bandera1 = False
@@ -88,24 +110,15 @@ def verificacion(lista):
             if contador < 0:
                 flag = False
 
-            
-            """
-            for j in range(i-lpN +1):
-                if (len(stack) > 0):
-                    h = stack.pop()
-                    print(h)
-            """
-
-            print("** " + str(sublista))
 
             corte = pertence(sublista)
-            print(corte)
+
             if (corte == None):
                 flag = False
             
             else:
                 stack.append(corte)
-                print(stack)
+
     
     for elemento in stack:
         if elemento != 'COMANDO':
@@ -163,7 +176,7 @@ def pertence(sublist):
             return None
         
     elif sublist[1] == 'LOOP' and sublist[0] == 'LP' and sublist[len(sublist)-1] == 'RP':
-        centinela_sub == True
+        centinela_sub = True
 
         if sublist[2] == 'CONDICION':
             longi_sub = len(sublist)
@@ -178,7 +191,7 @@ def pertence(sublist):
             return None
     
     elif sublist[1] == 'REPEAT' and sublist[0] == 'LP' and sublist[len(sublist)-1] == 'RP':
-        centinela_sub == True
+        centinela_sub = True
 
         if sublist[2] == 'NUMBER':
             longi_sub = len(sublist)
@@ -193,7 +206,7 @@ def pertence(sublist):
             return None
         
     elif sublist[1] == 'DEFUN' and sublist[0] == 'LP' and sublist[len(sublist)-1] == 'RP':
-        centinela_sub == True
+        centinela_sub = True
 
         if sublist[2] == 'NAME' and sublist[3] == 'PARAMS':
             longi_sub = len(sublist)
@@ -208,16 +221,38 @@ def pertence(sublist):
             return None
                 
     elif sublist[0] == 'LP' and sublist[len(sublist)-1] == 'RP' and len(sublist) > 2:
-        es_parametro = True
-        for pos in range(1, len(sublist)-1):
-            if sublist[pos] != 'NAME':
-                es_parametro = False
-        
-        if es_parametro == True:
-            return 'PARAMS'
-        elif es_parametro == False:
-            return None
 
+        if ('NAME' in sublist):
+            es_parametro = True
+            for pos in range(1, len(sublist)-1):
+                if sublist[pos] != 'NAME':
+                    es_parametro = False
+            
+            if es_parametro == True:
+                return 'PARAMS'
+              
+            
+        if ('COMANDO' in sublist):
+            es_varios_comandos = True
+            for pos in range(1, len(sublist)-1):
+                if sublist[pos] not in ['COMANDO', 'PARAMS', 'CONSTANTE']:
+                    es_varios_comandos = False
+            
+            if es_varios_comandos == True:
+                return 'COMANDO'
+            
+        if (sublist[1] == "NAME"):
+            es_llamado_funcion = True
+            for pos in range(1, len(sublist)-1):
+                if sublist[pos] not in ['NAME', 'NUMBER']:
+                    es_llamado_funcion = False
+            
+            if es_llamado_funcion == True:
+                return 'COMANDO'
+
+        return None
+
+        
     else:
         return None
     
