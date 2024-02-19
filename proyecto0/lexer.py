@@ -1,5 +1,3 @@
-import token as tk 
-
 
 caracteres_importantes = ["(", ")"]
 separadores = ["", " ", "\n", "\t"]
@@ -91,63 +89,69 @@ def es_constante (palabra):
 
 
 
+"""
+La funcion dar_tipo recibe una palabra del archivo que previamente fue separada
+LA funcion usa otras funciones auxiliares en donde reviza muchos casos haciendo
+uso de constantesqe son listas.
+
+Devuelte un ID, que le llamamos TOKEN por facilidad. 
+"""
 def dar_tipo(palabra):
     id = ""
-    valor = ""
 
     if (palabra == "("):
         id = "LP"
-        valor="(" 
 
     elif (palabra == ")"):
         id = "RP"
-        valor=")" 
     
     elif (es_numero(palabra)):
         id = "NUMBER"
-        valor = palabra
 
     elif (es_condicion(palabra)):
         id = palabra.upper()
-        valor = palabra
 
     elif (es_comando(palabra)):
         id = palabra.upper()
-        valor = palabra
 
     elif (es_estructura(palabra)):
         id = palabra.upper()
-        valor = palabra
 
     elif (es_cardinal(palabra)):
         id = "O"
-        valor = palabra
 
     elif (es_giro(palabra)):
         id = "D"
-        valor = palabra
 
     elif (es_item(palabra)):
         id = "X"
-        valor = palabra
 
     elif (es_null(palabra)):
         id = "NULL"
-        valor = palabra
  
     elif (es_constante(palabra)):
         id = "CONSTANTE"
-        valor = palabra
 
     else: 
         if (palabra != ""):
             id = "NAME"
-            valor = palabra
 
-    return id, valor
-
+    return id
 
 
+
+
+"""
+La funcion siguiente_palabra recibe el archivo de texto y una posicion 
+que es en donde se encuentra la ultima posicion revisada.
+
+Se separa las palabras teniendo en cuenta que los separadores de las palabras son 
+estacios ' ' y los parentesis '(' , ')'.
+Cuando encuentra dichos separadores llama para cada iteración y decuelve la el TOKEN 
+que le corresponda a la palabra, que obtiene al llamar a la funcion dar_tipo.  
+o caracter importante como el caso de los parentesis.
+tambien devuelve la posicion del archivo en la cual se quedo.
+"""
 def siguiente_palabra (archivo, i):
     
     palabra = ""
@@ -169,16 +173,26 @@ def siguiente_palabra (archivo, i):
         i+=1
 
     
-    idp, valorp = dar_tipo(palabra)
-
-    adicion = tk.Token(idp, valorp)
-    #return adicion, i               
-    return idp, i   #Cambiar el return de adicion por el de idp y el comentario de mas abajo para imprimir
+    idp = dar_tipo(palabra)
+             
+    return idp, i  
 
 
 
 
+"""
+La función separar_texto toma como entrada un archivo de completo en formato de String
+en minusculas y devuelve una lista con los Tokens y símbolos encontrados 
+en el archivo.
 
+Se utiliza un ciclo while que itera sobre las palabras en el archivo 
+hasta que se han procesado todos los caracteres. 
+Se llama a la funcion siguiente_palabra apenas se empieza.
+LA funcion retorna la siguiente palabra o caracter que cuente como palabra 
+en el archivo en forma de TOKEN. 
+
+Se guardan los tokens en orden y se retorna una lista con dichos Tokens.
+"""
 def separar_texto (archivo):
 
     tamanio = len(archivo)
@@ -193,12 +207,4 @@ def separar_texto (archivo):
     
     return respuesta
 
-
-
-
-
-#archivo= open("proyecto0/documentos/ejemplo.txt").read().lower()
-
-#lista = separar_texto(archivo)
-#print(lista)            #Quitar comentario para imprimir lista
 
