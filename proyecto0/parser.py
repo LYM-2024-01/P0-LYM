@@ -34,12 +34,6 @@ CONDICIONES = [
     ['LP', 'NOT', 'CONDICION', 'RP']
 ]
 
-ESTRUCTURAS = [
-    ['LP', 'IF', 'CONDICION', 'COMANDO', 'COMANDO', 'RP'],
-    ['LP', 'LOOP', 'CONDICION', 'COMANDO', 'RP'],
-    ['LP', 'REPEAT', 'NUMBER', 'COMANDO', 'RP'],
-]
-
 
 stack = []
 LPposition = []
@@ -59,7 +53,6 @@ def verificacion(lista):
         if tok == "LP":
             LPposition.append(i)
             contador+=1
-
 
         elif tok == "RP":
             lpN = LPposition.pop(-1)
@@ -86,15 +79,11 @@ def verificacion(lista):
                 stack.append(corte)
                 print(stack)
     
-    if len(stack) != 0:
-        flag = False
-
-    
+    for elemento in stack:
+        if elemento != 'COMANDO':
+            flag = False
+   
     return flag
-
-
-
-    return True
 
 def pertence(sublist):
 
@@ -109,7 +98,7 @@ def pertence(sublist):
         centinela_sub = True
         
         if sublist[0] == 'LP' and sublist[longi_sub-1] == 'RP':
-            for i in range(2, longi_sub-1):
+            for i in range(2, longi_sub-2):
                 if sublist[i] != 'D':
                     centinela_sub = False
         else:
@@ -123,7 +112,62 @@ def pertence(sublist):
         
     elif sublist == ['LP', 'RP']:
         return 'PARAMS'
-                
+    
+    elif sublist[1] == 'IF' and sublist[0] == 'LP' and sublist[longi_sub-1] == 'RP':
+        if sublist[2] == 'CONDICION':
+            longi_sub = len(sublist)
+            centinela_sub = True
+            for i in range(3, longi_sub-2):
+                if sublist[i] != 'COMANDO':
+                    centinela_sub = False
+        
+        if centinela_sub == True:
+            return 'COMANDO'
+        
+        else:
+            return None
+        
+    elif sublist[1] == 'LOOP' and sublist[0] == 'LP' and sublist[longi_sub-1] == 'RP':
+        if sublist[2] == 'CONDICION':
+            longi_sub = len(sublist)
+            centinela_sub = True
+            for i in range(3, longi_sub-2):
+                if sublist[i] != 'COMANDO':
+                    centinela_sub = False
+        
+        if centinela_sub == True:
+            return 'COMANDO'
+        
+        else:
+            return None
+    
+    elif sublist[1] == 'REPEAT' and sublist[0] == 'LP' and sublist[longi_sub-1] == 'RP':
+        if sublist[2] == 'NUMBER':
+            longi_sub = len(sublist)
+            centinela_sub = True
+            for i in range(3, longi_sub-2):
+                if sublist[i] != 'COMANDO':
+                    centinela_sub = False
+        
+        if centinela_sub == True:
+            return 'COMANDO'
+        
+        else:
+            return None
+        
+    elif sublist[1] == 'DEFUN' and sublist[0] == 'LP' and sublist[longi_sub-1] == 'RP':
+        if sublist[2] == 'NAME' and sublist[3] == 'PARAMS':
+            longi_sub = len(sublist)
+            centinela_sub = True
+            for i in range(4, longi_sub-2):
+                if sublist[i] != 'COMANDO':
+                    centinela_sub = False
+        
+        if centinela_sub == True:
+            return 'COMANDO'
+        
+        else:
+            return None
                 
     elif sublist[0] == 'LP' and sublist[len(sublist)-1] == 'RP' and len(sublist) > 2:
         es_parametro = True
@@ -135,14 +179,7 @@ def pertence(sublist):
             return 'PARAMS'
         elif es_parametro == False:
             return None
-                
-                
-                
-                
-    
-    #TODO Terminar con todos los posibles instrucciones y devolver el tipo si esta en el tipo
 
     else:
         return None
- 
-['LP', 'DEFUN', 'NAME', 'COMANDO', 'RP']
+    
