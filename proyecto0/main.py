@@ -1,6 +1,6 @@
 import sys
 import lexer
-import proyecto0.parser as parser
+import parse 
 # pip install pyparsing
 
 
@@ -20,12 +20,14 @@ def main ():
     lista = lexer.separar_texto(archivo)
     print(lista)
 
-    aceptado = parser.verificacion(lista)
-
+    aceptado = parse.verificacion(lista)
     try:
-        print("La cadena es válida según la gramática")
+        
 
-        #TODO Meter aca el llamado  aceptado = parse.verificacion(lista)
+        if (aceptado):
+            print("La cadena es válida según la gramática")
+        else:
+            print("La cadena no es válida según la gramática")
     except Exception as e:
         print("La cadena no es válida según la gramática")
         print(e)

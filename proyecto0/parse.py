@@ -20,12 +20,12 @@ COMANDOS = [
 ]
 
 CONDICIONES = [
-    ['LP', 'FACING?', 'O', 'RP']
-    ['LP', 'BLOCKED?', 'RP']
-    ['LP', 'CAN-PUT?', 'X', 'NUMBER', 'RP']
-    ['LP', 'CAN-PICK?', 'X', 'NUMBER', 'RP']
+    ['LP', 'FACING?', 'O', 'RP'],
+    ['LP', 'BLOCKED?', 'RP'],
+    ['LP', 'CAN-PUT?', 'X', 'NUMBER', 'RP'],
+    ['LP', 'CAN-PICK?', 'X', 'NUMBER', 'RP'],
     ['LP', 'CAN-MOVE?', 'O', 'RP'],
-    ['LP', 'ISZERO?', 'NUMBER', 'RP']
+    ['LP', 'ISZERO?', 'NUMBER', 'RP'],
     ['LP', 'NOT', 'CONDICION', 'RP']
 ]
 
@@ -38,7 +38,6 @@ vaciar la pila de manera más eficiente.
 
 stack = []
 LPposition = []
-contador = 0
 
 """
 La función de verficación nos informará si el código es válido según nuestra gramática
@@ -52,6 +51,7 @@ no a otro tipo de líneas.
 
 def verificacion(lista):
 
+    contador = 0
     flag = True
 
     for i in range(len(lista)):
@@ -67,22 +67,39 @@ def verificacion(lista):
 
         elif tok == "RP":
             lpN = LPposition.pop(-1)
-            sublist = lista[lpN:i+1]
+            bandera1 = True
+
+            sublista = []
+            print("------")
+            while (bandera1):
+                if (len(stack) > 0):
+                    h = stack.pop()
+                    print(h)
+                    sublista.insert(0,h)
+                    if(h == "LP"):
+                        bandera1 = False
+                else:
+                    bandera1 = False
+
+
+            #sublist = lista[lpN:i+1]
             contador -= 1
             
             if contador < 0:
                 flag = False
 
-            print("------")
+            
+            """
             for j in range(i-lpN +1):
                 if (len(stack) > 0):
                     h = stack.pop()
                     print(h)
+            """
 
-            print("** " + str(sublist))
+            print("** " + str(sublista))
 
-            corte = pertence(sublist)
-
+            corte = pertence(sublista)
+            print(corte)
             if (corte == None):
                 flag = False
             
@@ -130,24 +147,26 @@ def pertence(sublist):
     elif sublist == ['LP', 'RP']:
         return 'PARAMS'
     
-    elif sublist[1] == 'IF' and sublist[0] == 'LP' and sublist[longi_sub-1] == 'RP':
+    elif sublist[1] == 'IF' and sublist[0] == 'LP' and sublist[len(sublist)-1] == 'RP':
+        centinela_sub1 = True
+
         if sublist[2] == 'CONDICION':
             longi_sub = len(sublist)
-            centinela_sub = True
             for i in range(3, longi_sub-2):
                 if sublist[i] != 'COMANDO':
                     centinela_sub = False
         
-        if centinela_sub == True:
+        if centinela_sub1 == True:
             return 'COMANDO'
         
         else:
             return None
         
-    elif sublist[1] == 'LOOP' and sublist[0] == 'LP' and sublist[longi_sub-1] == 'RP':
+    elif sublist[1] == 'LOOP' and sublist[0] == 'LP' and sublist[len(sublist)-1] == 'RP':
+        centinela_sub == True
+
         if sublist[2] == 'CONDICION':
             longi_sub = len(sublist)
-            centinela_sub = True
             for i in range(3, longi_sub-2):
                 if sublist[i] != 'COMANDO':
                     centinela_sub = False
@@ -158,10 +177,11 @@ def pertence(sublist):
         else:
             return None
     
-    elif sublist[1] == 'REPEAT' and sublist[0] == 'LP' and sublist[longi_sub-1] == 'RP':
+    elif sublist[1] == 'REPEAT' and sublist[0] == 'LP' and sublist[len(sublist)-1] == 'RP':
+        centinela_sub == True
+
         if sublist[2] == 'NUMBER':
             longi_sub = len(sublist)
-            centinela_sub = True
             for i in range(3, longi_sub-2):
                 if sublist[i] != 'COMANDO':
                     centinela_sub = False
@@ -172,10 +192,11 @@ def pertence(sublist):
         else:
             return None
         
-    elif sublist[1] == 'DEFUN' and sublist[0] == 'LP' and sublist[longi_sub-1] == 'RP':
+    elif sublist[1] == 'DEFUN' and sublist[0] == 'LP' and sublist[len(sublist)-1] == 'RP':
+        centinela_sub == True
+
         if sublist[2] == 'NAME' and sublist[3] == 'PARAMS':
             longi_sub = len(sublist)
-            centinela_sub = True
             for i in range(4, longi_sub-2):
                 if sublist[i] != 'COMANDO':
                     centinela_sub = False
