@@ -1,14 +1,9 @@
-
-constant = {
-    "Dim" : "the dimensions of the board",
-    "myXpos": "the x postition of the robot",
-    "myYpos": "the y position of the robot",
-    "myChips": "number of chips held by the robot",
-    "myBalloons": "number of balloons held by the robot",
-    "balloonsHere": "number of balloons in the robot’s cell",
-    "ChipsHere": "number of chips that can be picked",
-    "Spaces": "number of chips that can be dropped"
-}
+"""
+Definimos estructuras base para facilitar la verificación del código.
+Sabemos que los comandos tendrán una estructura definida, así como las condiciones
+(a excepción de RUN_DIRS, que puede tener una cantidad de direcciones indeterminada)
+Las estructuras de control no se puede estandarizar, entonces serán verificadas individualmente.
+"""
 
 COMANDOS = [
     ['LP', 'DEFVAR', 'NAME', 'NUMBER', 'RP'],
@@ -34,10 +29,26 @@ CONDICIONES = [
     ['LP', 'NOT', 'CONDICION', 'RP']
 ]
 
+"""
+Se crea la pila para analizar el código, así como un contador que verficará
+la concordancia de paréntesis emparejados. Adicionalmente se crea una lista
+para guardar la posición de los parentésis izquierdos, esto con el fin de poder
+vaciar la pila de manera más eficiente.
+"""
 
 stack = []
 LPposition = []
 contador = 0
+
+"""
+La función de verficación nos informará si el código es válido según nuestra gramática
+Verificará constantemente la concordancia de paréntesis y de elementos individuales,
+una vez identifique inconsistencias, el algorítmo dejará de funcionar y reportará que
+el código ingresado es inválido.
+También contempla la posibilidad de error por falta de paréntesis, entonces para esto
+verificaremos que todas las instrucciones finales de la pila correspondan a comandos y
+no a otro tipo de líneas.
+"""
 
 def verificacion(lista):
 
@@ -84,6 +95,12 @@ def verificacion(lista):
             flag = False
    
     return flag
+
+"""
+La función pertenece se encarga de evaluar cada subcadena (tokens contenidos entre dos paréntesis
+emparejados) y de clasificarlos en categorias. Así sabremos si las condiciones, comandos y
+estructuras de control tiene una sintáxis válida.
+"""
 
 def pertence(sublist):
 
